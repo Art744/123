@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Target Calculator</title>
+<style>
+body{background:#0f1117;color:#fff;font-family:Arial;padding:15px}
+.card{background:#1b2230;border-radius:16px;padding:15px;margin-bottom:15px}
+input{width:100%;padding:10px;margin:4px 0 8px;box-sizing:border-box;background:#111722;color:#fff;border:1px solid #333;border-radius:8px}
+.ro{background:#29477a;font-weight:bold}
+h2{margin-top:0}
+</style></head><body>
+<div class="card"><h2>Калькулятор 1</h2>
+Цель $<input id=g1 type=number>
+Средний чек $<input id=c1 type=number>
+Количество продаж<input id=s1 class=ro readonly>
+Конверсия<input id=v1 type=number step=0.01>
+Количество заявок<input id=l1 class=ro readonly>
+Цена за заявку $<input id=p1 type=number>
+Рекламный бюджет $<input id=b1 class=ro readonly>
+</div>
+
+<div class="card"><h2>Калькулятор 2</h2>
+Цель $<input id=g2 class=ro readonly>
+Средний чек $<input id=c2 type=number>
+Количество продаж<input id=s2 class=ro readonly>
+Конверсия<input id=v2 type=number step=0.01>
+Количество заявок<input id=l2 class=ro readonly>
+Цена за заявку $<input id=p2 class=ro readonly>
+Рекламный бюджет $<input id=b2 type=number>
+</div>
+
+<div class="card"><h2>Калькулятор 3</h2>
+Цель $<input id=g3 type=number>
+Средний чек $<input id=c3 type=number>
+Количество продаж<input id=s3 class=ro readonly>
+Конверсия<input id=v3 class=ro readonly>
+Количество заявок<input id=l3 type=number>
+Цена за заявку $<input id=p3 class=ro readonly>
+Рекламный бюджет $<input id=b3 type=number>
+</div>
+
+<script>
+function n(id){return parseFloat(document.getElementById(id).value)||0}
+function w(id,val){document.getElementById(id).value=val?Number(val.toFixed(2)):''}
+
+function calc(){
+let g1=n('g1'),c1=n('c1'),v1=n('v1'),p1=n('p1');
+let sales1=(g1&&c1)?g1/c1:0;
+let leads1=(sales1&&v1)?sales1/v1:0;
+let budget1=(leads1&&p1)?leads1*p1:0;
+w('s1',sales1);w('l1',leads1);w('b1',budget1);
+
+let b2=n('b2'),c2=n('c2'),v2=n('v2');
+let sales2=(b2&&c2)?b2/c2:0;
+let leads2=(sales2&&v2)?sales2/v2:0;
+let cpl2=(b2&&leads2)?b2/leads2:0;
+let goal2=sales2*c2;
+w('s2',sales2);w('l2',leads2);w('p2',cpl2);w('g2',goal2);
+
+let g3=n('g3'),c3=n('c3'),l3=n('l3'),b3=n('b3');
+let sales3=(g3&&c3)?g3/c3:0;
+let conv3=(sales3&&l3)?sales3/l3:0;
+let cpl3=(b3&&l3)?b3/l3:0;
+w('s3',sales3);w('v3',conv3);w('p3',cpl3);
+}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',calc));
+</script>
+</body></html>
